@@ -18,7 +18,7 @@ export const Card = () => {
                             <Header title={"Faça o login"}></Header>
                         </Heading>
                         <Box mt="4">
-                            <FormLogin titleLogin={"Login"} gmail={""} password={""} name={""} />
+                            <FormLogin />
                         </Box>
                     </Box>
                 </Box>
