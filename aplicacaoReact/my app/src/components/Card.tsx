@@ -1,8 +1,6 @@
 import { Box, Button, ChakraProvider, Heading } from "@chakra-ui/react"
-import { Footer } from "./Footer"
 import { Header } from "./Header/Header"
 import { FormLogin } from "./FormLogin"
-import { login } from "../services/login";
 
 
 
@@ -19,9 +17,8 @@ export const Card = () => {
                         <Heading size="xl" textAlign="center">
                             <Header title={"Faça o login"}></Header>
                         </Heading>
-                            <FormLogin />
                         <Box mt="4">
-                            <Footer titleLogin={"Login"}></Footer>
+                            <FormLogin titleLogin={"Login"} gmail={""} password={""} name={""} />
                         </Box>
                     </Box>
                 </Box>
