@@ -1,26 +1,38 @@
-import { login } from "./login"
+
+import { Login } from "./login"
+
+const mockedSetIsLoggedIn = jest.fn()
+const mockNavigate = jest.fn()
 
 
-describe('login', ()=>{
+jest.mock('react', () => ({
+    ...jest.requireActual('react'),
+    useContext: () =>({
+        setIsLoggedIn: mockedSetIsLoggedIn
+    })
+}))
 
-    const mockAlert = jest.fn()
-    window.alert = mockAlert
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom') as any,
+    useNavigate: () => mockNavigate,
+}))
+
+
+describe('Login', ()=>{
+
     const mockEmail = 'ericklama@dio.me'
 
     
     
     it('Deve exibir um alert com boas vindas caso o email seja válido', async () =>{
-        await login(mockEmail)
-        expect(mockAlert).toHaveBeenCalledWith(`Bem vindo! ${mockEmail}`)
-    })
-
-    it('Não deve exibir a mensagem de boas vindas sem o email', async()=> {
-        await login(mockEmail)
-        expect(mockAlert).not.toHaveBeenCalledWith('Bem vindo!')
+        await Login(mockEmail)
+        expect(mockedSetIsLoggedIn).toHaveBeenCalledWith(true)
+        expect(mockNavigate).toHaveBeenCalledWith('/1')
     })
 
     it('Deve exibir um erro caso o email seja inválido', async () => {
-        await login('email.invalido.com')
-        expect(mockAlert).toHaveBeenCalledWith('Email inválido')
+        await Login('email.invalido.com')
+        expect(mockedSetIsLoggedIn).not.toHaveBeenCalledWith()
+        
     })
 })

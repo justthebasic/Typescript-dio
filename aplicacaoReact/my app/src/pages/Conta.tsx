@@ -1,8 +1,10 @@
 import { Box,Text, Center, SimpleGrid, Spinner } from "@chakra-ui/react"
 import { useParams, useNavigate, Link } from "react-router-dom"
 import { CardInfo } from "../components/CardInfo"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { api } from "../api"
+import { AppContext } from "../components/AppContext"
+
 
 
 interface FormLoginProps{
@@ -17,9 +19,15 @@ interface FormLoginProps{
 
 export const Conta = () => {
     const [userData, setUserData] = useState<null | FormLoginProps>()
+    const {id} = useParams()
+    const navigate = useNavigate()
 
+    const {isLoggedIn} = useContext(AppContext)
     
 
+    !isLoggedIn && navigate('/')
+
+    
     useEffect(() => {
         const getData = async () => {
         const data:any |FormLoginProps= await api
@@ -33,8 +41,7 @@ export const Conta = () => {
 
     const actualDate = new Date()
     
-    const {id} = useParams()
-    const navigate = useNavigate()
+    
 
     if(userData && id !== userData.id){
         navigate('/')
